@@ -1,80 +1,62 @@
 # prova.pratica
 Avaliação prática da UC Sistemas Embarcados e Microcontrolado.
 
-**💧 HydroSafe — Sistema Inteligente de Controle de Nível de Água
-Descrição**
+💧 HydroSafe — Sistema de Controle de Nível de Água com Arduino
+**Descrição**
 
-O HydroSafe é um sistema embarcado desenvolvido com Arduino para monitoramento e controle automático do nível de água em reservatórios.
+O HydroSafe é um sistema automatizado desenvolvido com Arduino para monitorar e controlar o nível de água em uma caixa. Ele utiliza sensores de nível, controle de bomba via servo motor e simulação de consumo por potenciômetro, garantindo eficiência e segurança no abastecimento.
 
-O projeto utiliza sensores de nível, sensor de vazão, display LCD, servo motor (bomba) e EEPROM para armazenar dados de consumo, garantindo um funcionamento eficiente, seguro e automatizado.
+** Objetivo**
 
-**Objetivo**
-
-Automatizar o processo de enchimento de um tanque, evitando desperdícios, prevenindo falhas nos sensores e controlando o consumo de água de forma inteligente.
+Automatizar o controle de enchimento de uma caixa d’água, evitando desperdícios, falta de água e falhas no sistema, além de permitir o monitoramento do consumo em tempo real.
 
 **Funcionalidades**
- Monitoramento de até 5 níveis de água
- Indicação visual com LEDs (crítico e cheio)
- Controle automático da bomba via servo motor
- Detecção de erros nos sensores
- Cálculo do consumo de água (litros)
- Armazenamento de dados na EEPROM
- Exibição em tempo real no LCD 16x2
- Limite máximo de consumo por nível
- Lógica do Sistema
+Leitura de 5 níveis de água
+Controle automático da bomba (servo motor)
+Simulação de consumo com potenciômetro
+Limite de consumo por nível
+Detecção de erro nos sensores
+Armazenamento de dados na EEPROM
+Exibição em display LCD I2C
+Indicação por LEDs (status do sistema)
 
-O sistema funciona com base em três pilares:
+** Lógica do Sistema**
 
-🔹 Nível da água
+O sistema lê os sensores para identificar o nível atual da água. Com base nisso:
 
-Sensores digitais identificam quantos níveis estão ativos no tanque.
+Liga a bomba quando necessário
+Desliga ao atingir limites ou detectar erros
+Calcula o consumo com base na vazão simulada
+Atualiza e salva os dados periodicamente
 
-🔹 Consumo
+ **Componentes Utilizados**
 
-Calculado a partir do sensor de vazão ao longo do tempo.
-
-🔹 Segurança
-Detecta inconsistências entre sensores
-Interrompe a bomba em caso de erro
-Respeita limites de consumo definidos
-
-** Componentes Utilizados**
 Arduino Uno (ou compatível)
-Display LCD 16x2
-5 sensores de nível (digitais)
-Sensor de vazão (analógico)
-Servo motor (controle da bomba)
+Display LCD I2C (16x2)
+5 sensores de nível
+Potenciômetro
+Servo motor
 LEDs (vermelho e verde)
 Resistores e jumpers
 
+**Estados do Sistema**
+Nível Crítico → Caixa vazia
+Enchendo → Bomba ativa
+Erro Sensor → Falha na leitura
+Limite Atingido → Consumo máximo do nível
+Cheio → Caixa totalmente abastecida
 
-** Pinagem**
-Componente	Pino Arduino
-LCD	8, 9, 10, 11, 12, 13
-Sensores nível	2, 3, 4, 5, 6
-Servo (bomba)	7
-Sensor de vazão	A0
-LED vermelho	A1
-LED verde	A2
+**Armazenamento**
+O consumo é salvo na EEPROM a cada 5 segundos, evitando perda de dados ao desligar o sistema.
 
-** Estados do Sistema**
-Situação	Descrição
-Nível Crítico	Todos sensores desligados
-Enchendo	Funcionamento normal
-Limite Atingido	Consumo máximo atingido
-Cheio	Tanque completamente cheio
-Erro Sensor	Falha na leitura dos sensores
+ **Exibição no LCD**
+ 
+Linha 1: Status + porcentagem
+Linha 2: Consumo (em litros)
 
-** Como Funciona**
-Lê os sensores de nível
-Verifica possíveis erros
-Calcula o consumo com base na vazão
-Controla a bomba automaticamente
-Atualiza o LCD e LEDs
-Salva dados na EEPROM
-
-** Como Usar**
-Monte o circuito conforme a pinagem
-Envie o código para o Arduino
-Ligue o sistema
-Acompanhe as informações no display
+ **Possíveis Melhorias**
+ 
+Integração com IoT
+Monitoramento remoto via app
+Sensores mais precisos
+Automação com válvulas reais
